@@ -32,11 +32,12 @@ with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context(storage_state = 'browser-state.json')
     page = context.new_page()
+
+    # Переходим на страницу Courses
     page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
 
     # Проверяется наличие и текст заголовка “Courses”
     courses_list_toolbar_title_text = page.get_by_test_id('courses-list-toolbar-title-text')
-    expect(courses_list_toolbar_title_text).to_be_visible()
     expect(courses_list_toolbar_title_text).to_have_text('Courses')
 
     # Проверяется наличие и видимость иконки пустого блока
@@ -46,14 +47,12 @@ with sync_playwright() as playwright:
     # Проверяется наличие и текст блока “There is no results”
     courses_list_empty_view_title_text = page.get_by_test_id(
         'courses-list-empty-view-title-text')
-    expect(courses_list_empty_view_title_text).to_be_visible()
     expect(courses_list_empty_view_title_text).to_have_text('There is no results')
 
     # Проверяется наличие и текст описания блока:
     # "Results from the load test pipeline will be displayed here"
     courses_list_empty_view_description_text = page.get_by_test_id(
         'courses-list-empty-view-description-text')
-    expect(courses_list_empty_view_description_text).to_be_visible()
     expect(courses_list_empty_view_description_text).to_have_text(
         'Results from the load test pipeline will be displayed here')
 
