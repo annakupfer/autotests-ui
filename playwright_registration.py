@@ -26,12 +26,6 @@ with sync_playwright() as playwright:
     registration_button.click()
 
     context.storage_state(path = 'browser-state.json')
-    # Проверяем, что произошел переход на страницу с заголовком Dashboard
-    # dashboard_toolbar_title_text = page.get_by_test_id('dashboard-toolbar-title-text')
-    # expect(dashboard_toolbar_title_text).to_be_visible()
-    # expect(dashboard_toolbar_title_text).to_have_text("Dashboard")
-
-    # Задержка для наглядности выполнения теста
 
 
 with sync_playwright() as playwright:
