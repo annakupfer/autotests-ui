@@ -1,5 +1,8 @@
 from playwright.sync_api import sync_playwright, expect
+import pytest
 
+@pytest.mark.courses
+@pytest.mark.regression
 def test_empty_courses_list():
 
     with sync_playwright() as playwright:
@@ -26,6 +29,7 @@ def test_empty_courses_list():
         registration_button.click()
 
         # Запоминаем состояние браузера
+
         context.storage_state(path='browser-state.json')
 
         # Создаем новую сессию браузера

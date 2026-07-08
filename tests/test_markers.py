@@ -10,7 +10,7 @@ def test_regression_case():
 
 @pytest.mark.smoke
 class TestSuite:
-    @pytest.mark.some
+
     def test_case1(self):
             ...
 
