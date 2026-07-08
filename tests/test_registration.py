@@ -1,6 +1,10 @@
 
 from playwright.sync_api import sync_playwright
+import pytest
 
+
+@pytest.mark.regression
+@pytest.mark.registration
 def test_successful_registration():
     with sync_playwright() as playwright:
         # Открываем браузер и создаем новую страницу
@@ -36,4 +40,3 @@ def test_successful_registration():
         page = context.new_page()
         page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard")
 
-        page.wait_for_timeout(50000)
