@@ -1,3 +1,6 @@
 import pytest
 
-pytest_plugins = ("fixtures.browsers")
+pytest_plugins = (
+    "fixtures.browsers",
+    "fixtures.pages"
+                  )
