@@ -31,10 +31,7 @@ def test_create_course(
         courses_list_page: CoursesListPage,
         ):
     # Переходим на страницу создания курса
-    chromium_page_with_state.goto(
-        'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create'
-    )
-
+    create_course_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
     # Проверяем заголовок, кнопку создания курса, и пустые блоки картинок
     create_course_page.check_visible_create_course_title()
     create_course_page.check_disabled_create_course_button()
