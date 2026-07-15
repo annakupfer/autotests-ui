@@ -39,5 +39,10 @@ def initialize_browser_state(playwright: Playwright) -> None:
 def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context(storage_state='browser-state.json')
+
+    page = context.new_page()
+    page.on("pageerror", lambda error: print("PAGE ERROR:", error))
+    page.on("console", lambda msg: print("CONSOLE:", msg.type, msg.text))
+
     yield context.new_page()
     browser.close()
