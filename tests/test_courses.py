@@ -7,11 +7,10 @@ from pages.courses_list_page import CoursesListPage
 @pytest.mark.courses
 @pytest.mark.regression
 def test_empty_courses_list(
-        chromium_page_with_state: Page,
         courses_list_page: CoursesListPage
 ):
     # Переходим на страницу Courses
-    chromium_page_with_state.goto(
+    courses_list_page.visit(
         'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
     )
     # Проверяется наличие и текст заголовка “Courses”
@@ -26,7 +25,6 @@ def test_empty_courses_list(
 @pytest.mark.courses
 @pytest.mark.regression
 def test_create_course(
-        chromium_page_with_state: Page,
         create_course_page: CreateCoursePage,
         courses_list_page: CoursesListPage,
         ):
