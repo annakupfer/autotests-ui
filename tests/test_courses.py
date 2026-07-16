@@ -1,18 +1,22 @@
 import pytest
-from playwright.sync_api import Page
+
 from pages.create_course_page import CreateCoursePage
 from pages.courses_list_page import CoursesListPage
-
 
 @pytest.mark.courses
 @pytest.mark.regression
 def test_empty_courses_list(
         courses_list_page: CoursesListPage
 ):
-    # Переходим на страницу Courses
+    # Переход на страницу Courses
     courses_list_page.visit(
         'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
     )
+
+    # Проверяется отображение Navbar и Sidebar
+    courses_list_page.navbar.check_visible('username')
+    courses_list_page.sidebar.check_visible()
+
     # Проверяется наличие и текст заголовка “Courses”
     courses_list_page.check_visible_courses_title()
 
@@ -28,7 +32,7 @@ def test_create_course(
         create_course_page: CreateCoursePage,
         courses_list_page: CoursesListPage,
         ):
-    # Переходим на страницу создания курса
+    # Переход на страницу создания курса
     create_course_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
     # Проверяем заголовок, кнопку создания курса, и пустые блоки картинок
     create_course_page.check_visible_create_course_title()
