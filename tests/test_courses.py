@@ -13,15 +13,10 @@ def test_empty_courses_list(
         'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
     )
 
-    # Проверяется отображение Navbar и Sidebar
+    # Проверяется отображение Navbar, Sidebar, Toolbar
     courses_list_page.navbar.check_visible('username')
     courses_list_page.sidebar.check_visible()
-
-    # Проверяется наличие и текст заголовка “Courses”
-    courses_list_page.check_visible_courses_title()
-
-    # Проверяется наличие кнопки создания курса
-    courses_list_page.check_visible_create_course_button()
+    courses_list_page.toolbar_view.check_visible()
 
     # Проверяется отображение пустого блока
     courses_list_page.check_visible_empty_view()
@@ -37,8 +32,7 @@ def test_create_course(
     # Проверяем заголовок, кнопку создания курса, и пустые блоки картинок
     create_course_page.check_visible_create_course_title()
     create_course_page.check_disabled_create_course_button()
-    create_course_page.check_visible_image_preview_empty_view()
-    create_course_page.check_visible_image_upload_view()
+    create_course_page.image_upload_widget.check_visible(is_image_uploaded=False)
 
     # Проверяем форму создания курса, заголовок заданий, кнопку создания заданий
     create_course_page.check_visible_create_course_form(
@@ -55,8 +49,8 @@ def test_create_course(
     create_course_page.check_visible_exercises_empty_view()
 
     # Загружаем картинку и проверяем блок в состоянии загруженной картинки
-    create_course_page.upload_preview_image(file = './testdata/files/image.png')
-    create_course_page.check_visible_image_upload_view()
+    create_course_page.image_upload_widget.upload_preview_image(file = './testdata/files/image.png')
+    create_course_page.image_upload_widget.check_visible(is_image_uploaded=True)
 
     # Заполняем форму создания курса
     create_course_page.fill_create_course_form(
@@ -70,10 +64,9 @@ def test_create_course(
     # Создаем курс
     create_course_page.click_create_course_button()
 
-    # Проверяем карточку курса, заголовок, кнопку создания курса
-    courses_list_page.check_visible_courses_title()
-    courses_list_page.check_visible_create_course_button()
-    courses_list_page.check_visible_course_card(
+    # Проверяем карточку курса, Toolbar
+    courses_list_page.toolbar_view.check_visible()
+    courses_list_page.course_view.check_visible(
         index=0,
         title="Playwright",
         estimated_time="2 weeks",
