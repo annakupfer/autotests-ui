@@ -12,7 +12,6 @@ def test_empty_courses_list(
     courses_list_page.visit(
         'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
     )
-
     # Проверяется отображение Navbar, Sidebar, Toolbar
     courses_list_page.navbar.check_visible('username')
     courses_list_page.sidebar.check_visible()
@@ -28,22 +27,23 @@ def test_create_course(
         courses_list_page: CoursesListPage,
         ):
     # Переход на страницу создания курса
-    create_course_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
+    create_course_page.visit(
+        'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create'
+    )
     # Проверяем заголовок, кнопку создания курса, и пустые блоки картинок
-    create_course_page.check_visible_create_course_title()
-    create_course_page.check_disabled_create_course_button()
+    create_course_page.create_course_toolbar_view.check_visible()
+
     create_course_page.image_upload_widget.check_visible(is_image_uploaded=False)
 
     # Проверяем форму создания курса, заголовок заданий, кнопку создания заданий
-    create_course_page.check_visible_create_course_form(
+    create_course_page.create_course_form.check_visible(
         title="",
         estimated_time="",
         description="",
         max_score="0",
         min_score="0",
     )
-    create_course_page.check_visible_exercises_title()
-    create_course_page.check_visible_create_exercise_button()
+    create_course_page.create_course_exercises_toolbar_view.check_visible()
 
     # Проверяем отображение блока с пустыми заданиями
     create_course_page.check_visible_exercises_empty_view()
@@ -53,7 +53,7 @@ def test_create_course(
     create_course_page.image_upload_widget.check_visible(is_image_uploaded=True)
 
     # Заполняем форму создания курса
-    create_course_page.fill_create_course_form(
+    create_course_page.create_course_form.fill(
         title="Playwright",
         estimated_time="2 weeks",
         description="Playwright",
@@ -62,7 +62,7 @@ def test_create_course(
     )
 
     # Создаем курс
-    create_course_page.click_create_course_button()
+    create_course_page.create_course_toolbar_view.click_create_course_button()
 
     # Проверяем карточку курса, Toolbar
     courses_list_page.toolbar_view.check_visible()

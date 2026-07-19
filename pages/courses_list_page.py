@@ -1,7 +1,7 @@
 from playwright.sync_api import Page
 
-from components.courses.courses_list_toolbar_view_component import CoursesListToolbarViewComponent
 from pages.base_page import BasePage
+
 from components.navigation.sidebar_component import SidebarComponent
 from components.navigation.navbar_component import NavbarComponent
 from components.views.empty_view_component import EmptyViewComponent
@@ -12,12 +12,10 @@ class CoursesListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        # Добавляем компоненты SidebarComponent, NavbarComponent, ToolbarComponent
+        # Добавляем компоненты
         self.sidebar = SidebarComponent(page)
         self.navbar = NavbarComponent(page)
         self.toolbar_view = CoursesListToolbarViewComponent(page)
-
-        # Добавляем компонент EmptyViewComponent
         self.empty_view = EmptyViewComponent(page, 'courses-list')
         self.course_view = CourseViewComponent(page)
 
