@@ -30,6 +30,8 @@ class CreateCourseExerciseFormComponent(BaseComponent):
             'Description'
         )
 
+
+
     def click_delete_button(self, index: int):
         self.delete_exercise_button.click(index=index)
 
