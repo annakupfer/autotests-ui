@@ -9,4 +9,4 @@ class Button(BaseElement):
 
     def check_disabled(self, nth: int = 0, **kwargs):
         locator = self.get_locator(nth, **kwargs)
-        expect(locator).to_be_disbled()
+        expect(locator).to_be_disabled()
