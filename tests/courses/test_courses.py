@@ -1,4 +1,5 @@
 import pytest
+import re
 
 from pages.courses.create_course_page import CreateCoursePage
 from pages.courses.courses_list_page import CoursesListPage
@@ -72,4 +73,43 @@ class TestCourses:
             estimated_time="2 weeks",
             max_score="100",
             min_score="10"
+        )
+
+    def test_edit_course(self, courses_list_page: CoursesListPage, create_course_page: CreateCoursePage):
+        create_course_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create')
+        create_course_page.create_course_form.fill(
+            title='Playwright',
+            estimated_time='1h20m',
+            description='Playwright',
+            max_score='10',
+            min_score='3'
+        )
+        create_course_page.image_upload_widget.upload_preview_image(
+            file='./testdata/files/image.png'
+        )
+
+        create_course_page.create_course_toolbar_view.click_create_course_button()
+        courses_list_page.check_current_url(re.compile('.*/#/courses'))
+        courses_list_page.course_view.check_visible(
+            index=0,
+            title='Playwright',
+            estimated_time='1h20m',
+            max_score='10',
+            min_score='3'
+        )
+        courses_list_page.course_view.menu.click_edit(0)
+        create_course_page.create_course_form.fill(
+            title='Python',
+            estimated_time='2h30m',
+            description='Python',
+            max_score='15',
+            min_score='2'
+        )
+        create_course_page.create_course_toolbar_view.click_create_course_button()
+        courses_list_page.course_view.check_visible(
+            index=0,
+            title='Python',
+            estimated_time='2h30m',
+            max_score='15',
+            min_score='2'
         )
