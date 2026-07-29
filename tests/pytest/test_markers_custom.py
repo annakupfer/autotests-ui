@@ -11,6 +11,6 @@ class TestCustom:
         pass
 
     @pytest.mark.registration
-    @pytest.mark.regression
+
     def test_password_reset(self):
         pass

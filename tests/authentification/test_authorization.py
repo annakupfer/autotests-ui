@@ -4,8 +4,8 @@ import allure
 from tools.allure.epics import AllureEpic
 from tools.allure.tags import AllureTag
 from tools.allure.epics import AllureEpic
-from tools.allure.features import AllureFeatures
-from tools.allure.stories import AllureStories
+from tools.allure.features import AllureFeature
+from tools.allure.stories import AllureStory
 from allure_commons.types import Severity
 from pages.authentification.login_page import LoginPage
 from pages.authentification.registration_page import RegistrationPage
@@ -16,8 +16,12 @@ from pages.dashboard.dashboard_page import DashboardPage
 @pytest.mark.authorization
 @allure.tag(AllureTag.REGRESSION, AllureTag.AUTHORIZATION)
 @allure.epic(AllureEpic.LMS)
-@allure.feature(AllureFeatures.AUTHENTIFICATION)
-@allure.story(AllureStories.AUTHORIZATION)
+@allure.feature(AllureFeature.AUTHENTIFICATION)
+@allure.story(AllureStory.AUTHORIZATION)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.AUTHENTIFICATION)
+@allure.sub_suite(AllureStory.AUTHORIZATION)
+
 class TestAuthorization:
     @allure.title('User login with correct email and login')
     @allure.severity(Severity.BLOCKER)
