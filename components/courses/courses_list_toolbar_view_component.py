@@ -1,6 +1,7 @@
 import re
 
 from playwright.sync_api import Page
+import allure
 
 from components.base_component import BaseComponent
 from elements.text import Text
