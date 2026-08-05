@@ -1,4 +1,6 @@
 from playwright.sync_api import Page, expect
+import allure
+
 from typing import Pattern
 
 class BaseComponent:
