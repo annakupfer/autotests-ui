@@ -1,13 +1,23 @@
 import pytest
+import allure
+from _pytest.fixtures import SubRequest
 from playwright.sync_api import Page, Playwright
+from allure_commons.types import AttachmentType
 
 from pages.authentification.registration_page import RegistrationPage
 
 @pytest.fixture
-def chromium_page(playwright: Playwright) -> Page:
+def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=False)
-    yield browser.new_page()
+    context = browser.new_context()
+    context.tracing.start(screenshots=True,snapshots=True,sources=True)
+
+    yield context.new_page()
+
+    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
     browser.close()
+
+    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
 
 @pytest.fixture(scope= "session")
 def initialize_browser_state(playwright: Playwright) -> None:
@@ -25,14 +35,17 @@ def initialize_browser_state(playwright: Playwright) -> None:
     context.storage_state(path='browser-state.json')
     browser.close()
 
+
 @pytest.fixture
-def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:
+def chromium_page_with_state(request: SubRequest, initialize_browser_state, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context(storage_state='browser-state.json')
 
-    page = context.new_page()
-    page.on("pageerror", lambda error: print("PAGE ERROR:", error))
-    page.on("console", lambda msg: print("CONSOLE:", msg.type, msg.text))
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
     yield context.new_page()
+
+    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
     browser.close()
+
+    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
