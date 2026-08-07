@@ -8,6 +8,9 @@ from tools.allure.stories import AllureStory
 from allure_commons.types import Severity
 from pages.authentification.registration_page import RegistrationPage
 from pages.dashboard.dashboard_page import DashboardPage
+from tools.routes import AppRoute
+from config import settings
+
 
 @pytest.mark.regression
 @pytest.mark.registration
@@ -26,12 +29,11 @@ class TestRegistration:
                 registration_page: RegistrationPage,
                 dashboard_page: DashboardPage
         ) -> None:
-                registration_page.visit(
-                        "https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration"
-                )
+                registration_page.visit(AppRoute.REGISTRATION)
                 registration_page.fill(
-                        email="user.name@gmail.com",
-                        username="username",
-                        password="password")
+                        email=settings.test_user.email,
+                        username=settings.test_user.username,
+                        password=settings.test_user.password
+                )
                 registration_page.click_registration_button()
                 dashboard_page.dashboard_toolbar_view.check_visible()
