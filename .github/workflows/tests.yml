@@ -32,6 +32,12 @@ jobs:
           python -m pip install --upgrade pip  # Обновляем pip до последней версии
           pip install -r requirements.txt  # Устанавливаем зависимости, указанные в requirements.txt
           playwright install --with-deps  # Устанавливаем браузеры для Playwright (если они не установлены)
+          
+
+      #. Временно добавляем шаг для проверки headless
+      - name: Check headless setting
+        run: |
+          python -c "from config import settings; print('HEADLESS =', settings.headless)"
 
       # 4. Шаг для запуска тестов с использованием pytest и генерации отчётов Allure
       - name: Run Playwright tests with pytest and generate Allure results
@@ -63,3 +69,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # Токен для аутентификации на GitHub
           publish_branch: gh-pages  # Указываем, что отчёт будет опубликован в ветке gh-pages
           publish_dir: allure-history  # Указываем папку, которая будет опубликована на GitHub Pages
+
+
+
