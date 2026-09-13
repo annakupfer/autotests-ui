@@ -18,6 +18,7 @@ def initialize_playwright_page(
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
     page = context.new_page()
+
     mock_static_resources(page)
 
     yield page

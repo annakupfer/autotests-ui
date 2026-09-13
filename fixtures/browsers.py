@@ -26,6 +26,7 @@ def initialize_browser_state(playwright: Playwright) -> None:
     registration_page.visit(AppRoute.REGISTRATION)
     registration_page.registration_form.fill(email=settings.test_user.email, username = settings.test_user.username, password=settings.test_user.password)
     registration_page.click_registration_button()
+    page.wait_for_url("**/#/dashboard")
 
     # Запоминаем состояние браузера
     context.storage_state(path=settings.browser_state_file)
